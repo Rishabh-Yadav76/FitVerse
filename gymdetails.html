@@ -1,0 +1,961 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Gym Full Profile | FIT-verse</title>
+
+  <!-- CSS -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css"/>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css"/>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@9/swiper-bundle.min.css"/>
+  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600;700;800&display=swap" rel="stylesheet">
+  <script defer src="gymdetails.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/swiper@9/swiper-bundle.min.js"></script>
+  <!-- Google Maps API -->
+  <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDwHAlOc-m2kK7yAYHc1MnH9e9CUQIBJKk&callback=initMap&libraries=places" async defer></script>
+
+  <style>
+    :root {
+      --primary: #2c3e50;
+      --secondary: #3498db;
+      --accent: #e74c3c;
+      --light: #ecf0f1;
+      --dark: #2c3e50;
+      --shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+      --radius: 10px;
+      --transition: all 0.3s ease;
+    }
+    
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    }
+    
+    body {
+      background-color: #f9f9f9;
+      color: var(--dark);
+      line-height: 1.6;
+    }
+    
+    /* Header/Navbar - FIT-verse Theme */
+    .header {
+      background-color: white;
+      box-shadow: var(--shadow);
+      padding: 1.5rem 2rem;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      position: sticky;
+      top: 0;
+      z-index: 100;
+    }
+    
+    .logo {
+      font-size: 1.8rem;
+      font-weight: bold;
+      color: var(--accent);
+      animation: fadeInDown 0.8s;
+    }
+    
+    .nav-links {
+      display: flex;
+      list-style: none;
+      gap: 2rem;
+    }
+    
+    .nav-links a {
+      text-decoration: none;
+      color: var(--dark);
+      font-weight: 500;
+      transition: var(--transition);
+      position: relative;
+    }
+    
+    .nav-links a:hover {
+      color: var(--accent);
+    }
+    
+    .nav-links a::after {
+      content: '';
+      position: absolute;
+      width: 0;
+      height: 2px;
+      bottom: -5px;
+      left: 0;
+      background-color: var(--accent);
+      transition: var(--transition);
+    }
+    
+    .nav-links a:hover::after {
+      width: 100%;
+    }
+
+
+/* Base Styles with Fitness Theme */
+.trial-booking-container {
+    max-width: 800px; /* Wider form */
+    margin: 2rem auto;
+    padding: 3rem;
+    background: var(--light);
+    border-radius: 16px;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+    font-family: 'Montserrat', sans-serif;
+    transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+    border: 3px solid var(--primary);
+    position: relative;
+    overflow: hidden;
+}
+
+.trial-booking-container::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 5px;
+    background: linear-gradient(90deg, var(--primary), var(--accent));
+}
+
+.trial-booking-container:hover {
+    box-shadow: 0 15px 40px rgba(255, 94, 20, 0.3);
+    transform: translateY(-5px);
+}
+
+.trial-booking-container h2 {
+    text-align: center;
+    color: var(--primary);
+    margin-bottom: 2rem;
+    font-weight: 800;
+    font-size: 2.2rem;
+    text-transform: uppercase;
+    letter-spacing: 2px;
+    position: relative;
+    padding-bottom: 15px;
+    text-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
+}
+
+.trial-booking-container h2::after {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 120px;
+    height: 4px;
+    background: linear-gradient(90deg, var(--primary), var(--accent));
+    border-radius: 4px;
+}
+
+/* Form Group Styles with Fitness Theme */
+.form-group {
+    margin-bottom: 2rem;
+    position: relative;
+}
+
+.form-group label {
+    display: block;
+    margin-bottom: 0.8rem;
+    color: var(--primary);
+    font-weight: 600;
+    font-size: 1.1rem;
+    transition: all 0.4s ease;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+}
+
+.form-group input,
+.form-group textarea {
+    width: 100%;
+    padding: 15px 20px;
+    border: 2px solid rgba(255, 255, 255, 0.1);
+    border-radius: 10px;
+    font-size: 1rem;
+    transition: all 0.4s ease;
+    background-color: white;
+    color: black;
+    font-weight: 500;
+}
+
+.form-group input::placeholder,
+.form-group textarea::placeholder {
+    color: rgba(255, 255, 255, 0.4);
+    font-weight: 400;
+}
+
+.form-group input:focus,
+.form-group textarea:focus {
+    outline: none;
+    border-color: var(--accent);
+    box-shadow: 0 0 0 3px rgba(0, 229, 255, 0.3);
+    background-color: rgba(0, 229, 255, 0.05);
+}
+
+.form-group textarea {
+    min-height: 150px;
+    resize: vertical;
+}
+
+/* Animated Underline Effect */
+.form-group::after {
+    content: '';
+    position: absolute;
+    bottom: -5px;
+    left: 0;
+    width: 0;
+    height: 2px;
+    background: var(--primary);
+    transition: width 0.4s ease;
+}
+
+.form-group:focus-within::after {
+    width: 100%;
+}
+
+/* Submit Button - Fitness Style */
+.btn-submit {
+    width: 100%;
+    padding: 18px;
+    background: linear-gradient(90deg, var(--accent), #FF8C42);
+    color: white;
+    border: none;
+    border-radius: 10px;
+    font-size: 1.1rem;
+    font-weight: 700;
+    cursor: pointer;
+    transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+    text-transform: uppercase;
+    letter-spacing: 2px;
+    box-shadow: 0 4px 15px rgba(255, 94, 20, 0.4);
+    position: relative;
+    overflow: hidden;
+}
+
+.btn-submit:hover {
+    background: linear-gradient(90deg, #FF8C42, var(--accent));
+    transform: translateY(-3px);
+    box-shadow: 0 8px 25px rgba(255, 94, 20, 0.5);
+    letter-spacing: 3px;
+}
+
+.btn-submit:active {
+    transform: translateY(1px);
+}
+
+.btn-submit::after {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
+    transition: all 0.6s ease;
+}
+
+.btn-submit:hover::after {
+    left: 100%;
+}
+
+/* Date Input Customization */
+input[type="date"] {
+    appearance: none;
+    background-image: url("data:image/svg+xml;charset=UTF-8,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='%23FF5E14' width='24px' height='24px'%3e%3cpath d='M19 3h-1V1h-2v2H8V1H6v2H5c-1.11 0-2 .9-2 2v14c0 1.1.89 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zm0 16H5V8h14v11zM9 10H7v2h2v-2zm4 0h-2v2h2v-2zm4 0h-2v2h2v-2zm-8 4H7v2h2v-2zm4 0h-2v2h2v-2zm4 0h-2v2h2v-2z'/%3e%3c/svg%3e");
+    background-repeat: no-repeat;
+    background-position: right 15px center;
+    background-size: 24px;
+}
+
+/* Pulse Animation for Form Groups */
+@keyframes pulse {
+    0% { transform: scale(1); }
+    50% { transform: scale(1.02); }
+    100% { transform: scale(1); }
+}
+
+.form-group {
+    opacity: 0;
+    transform: translateY(30px);
+    animation: fadeInUp 0.6s ease forwards;
+}
+
+.form-group:nth-child(1) { animation-delay: 0.1s; }
+.form-group:nth-child(2) { animation-delay: 0.2s; }
+.form-group:nth-child(3) { animation-delay: 0.3s; }
+.form-group:nth-child(4) { animation-delay: 0.4s; }
+
+@keyframes fadeInUp {
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+/* Success Message */
+.form-success {
+    text-align: center;
+    padding: 20px;
+    background-color: var(--success);
+    color: white;
+    border-radius: 8px;
+    margin-top: 20px;
+    display: none;
+    animation: fadeIn 0.5s ease;
+    font-weight: 600;
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+    .trial-booking-container {
+        padding: 2rem;
+        margin: 1rem;
+    }
+    
+    .trial-booking-container h2 {
+        font-size: 1.8rem;
+    }
+    
+    .form-group input,
+    .form-group textarea {
+        padding: 12px 15px;
+    }
+    
+    .btn-submit {
+        padding: 16px;
+    }
+}
+
+/* Add this to your HTML head for the font */
+/* <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600;700;800&display=swap" rel="stylesheet"> */
+    /* Main Content */
+    .container {
+      max-width: 1200px;
+      margin: 2rem auto;
+      padding: 0 2rem;
+    }
+    
+    /* Hero Section */
+    .gym-hero {
+      position: relative;
+      height: 400px;
+      border-radius: var(--radius);
+      overflow: hidden;
+      margin-bottom: 3rem;
+      box-shadow: var(--shadow);
+      animation: fadeIn 1s;
+    }
+    
+    .gym-hero img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      transition: transform 0.5s ease;
+    }
+    
+    .gym-hero:hover img {
+      transform: scale(1.05);
+    }
+    
+    .hero-content {
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      right: 0;
+      padding: 2rem;
+      background: linear-gradient(to top, rgba(0,0,0,0.8), transparent);
+      color: white;
+    }
+    
+    .hero-content h1 {
+      font-size: 2.5rem;
+      margin-bottom: 0.5rem;
+      text-shadow: 0 2px 5px rgba(0,0,0,0.5);
+    }
+    
+    .rating {
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+    }
+    
+    .rating i {
+      color: #f1c40f;
+    }
+    
+    /* Sections */
+    .section {
+      background: white;
+      border-radius: var(--radius);
+      padding: 2rem;
+      margin-bottom: 2rem;
+      box-shadow: var(--shadow);
+      opacity: 0;
+      transform: translateY(20px);
+      transition: opacity 0.6s ease, transform 0.6s ease;
+    }
+    
+    .section.visible {
+      opacity: 1;
+      transform: translateY(0);
+    }
+    
+    .section-title {
+      font-size: 1.8rem;
+      color: var(--primary);
+      margin-bottom: 1.5rem;
+      position: relative;
+      padding-bottom: 0.5rem;
+    }
+    
+    .section-title::after {
+      content: '';
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      width: 60px;
+      height: 3px;
+      background-color: var(--accent);
+    }
+    
+    /* Photo Grid */
+    .photo-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+      gap: 1rem;
+      margin-top: 1.5rem;
+    }
+    
+    .photo-item {
+      height: 200px;
+      border-radius: var(--radius);
+      overflow: hidden;
+      position: relative;
+      cursor: pointer;
+      transition: var(--transition);
+    }
+    
+    .photo-item:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 10px 20px rgba(0,0,0,0.2);
+    }
+    
+    .photo-item img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      transition: transform 0.5s ease;
+    }
+    
+    .photo-item:hover img {
+      transform: scale(1.1);
+    }
+    
+    /* Map */
+    #map {
+      width: 100%;
+      height: 300px;
+      border-radius: var(--radius);
+      margin-top: 1.5rem;
+      box-shadow: var(--shadow);
+      border: 1px solid #ddd;
+    }
+    
+    /* Features & Activities */
+    /* Features & Activities Styles */
+.features-activities-container {
+  margin-top: 20px;
+}
+
+.features-section, .activities-section {
+  margin-bottom: 30px;
+}
+
+.features-grid, .activities-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+  gap: 15px;
+  margin-top: 15px;
+}
+
+.feature-item, .activity-item {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 10px;
+  background: #f8f9fa;
+  border-radius: 8px;
+  transition: all 0.3s ease;
+}
+
+.feature-item:hover, .activity-item:hover {
+  background: #1ebde5;
+  transform: translateY(-3px);
+}
+
+.feature-item i, .activity-item i {
+  font-size: 1.2rem;
+  color: var(--primary-color);
+}
+
+.features-section h3, .activities-section h3 {
+  color: var(--primary-color);
+  margin-bottom: 10px;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+    /* Equipment */
+    .equipment-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+      gap: 1.5rem;
+      margin-top: 1.5rem;
+    }
+    
+    .equipment-card {
+      background: white;
+      border-radius: var(--radius);
+      padding: 1.5rem;
+      text-align: center;
+      box-shadow: var(--shadow);
+      transition: var(--transition);
+    }
+    
+    .equipment-card:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 10px 20px rgba(0,0,0,0.15);
+    }
+    
+    .equipment-card img {
+      width: 100%;
+      height: 120px;
+      object-fit: contain;
+      margin-bottom: 1rem;
+    }
+    
+    /* Membership Plans */
+    .membership-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+      gap: 2rem;
+      margin-top: 2rem;
+    }
+    
+    .plan-card {
+      background: white;
+      border-radius: var(--radius);
+      padding: 2rem;
+      box-shadow: var(--shadow);
+      transition: var(--transition);
+      position: relative;
+      overflow: hidden;
+    }
+    
+    .plan-card:hover {
+      transform: translateY(-10px);
+      box-shadow: 0 15px 30px rgba(0,0,0,0.15);
+    }
+    
+    .plan-card.popular::before {
+      content: 'Most Popular';
+      position: absolute;
+      top: 15px;
+      right: -30px;
+      background: var(--accent);
+      color: white;
+      padding: 0.3rem 2rem;
+      transform: rotate(45deg);
+      font-size: 0.8rem;
+      font-weight: bold;
+    }
+    
+    .plan-name {
+      font-size: 1.5rem;
+      margin-bottom: 1rem;
+      color: var(--primary);
+    }
+    
+    .plan-price {
+      font-size: 2rem;
+      font-weight: bold;
+      margin-bottom: 1rem;
+      color: var(--accent);
+    }
+    
+    .plan-features {
+      list-style: none;
+      margin-bottom: 2rem;
+    }
+    
+    .plan-features li {
+      margin-bottom: 0.5rem;
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+    }
+    
+    .plan-features i {
+      color: var(--secondary);
+    }
+    
+    .btn {
+      display: inline-block;
+      padding: 0.8rem 1.5rem;
+      background: var(--accent);
+      color: white;
+      border: none;
+      border-radius: 50px;
+      font-weight: bold;
+      cursor: pointer;
+      transition: var(--transition);
+      text-decoration: none;
+      text-align: center;
+    }
+    
+    .btn:hover {
+      background: #c0392b;
+      transform: translateY(-3px);
+      box-shadow: 0 5px 15px rgba(231, 76, 60, 0.4);
+    }
+    
+    
+    /* Reviews */
+    .reviews {
+      margin-top: 2rem;
+    }
+    
+    .review-card {
+      background: white;
+      border-radius: var(--radius);
+      padding: 1.5rem;
+      margin-bottom: 1.5rem;
+      box-shadow: var(--shadow);
+      transition: var(--transition);
+    }
+    
+    .review-card:hover {
+      transform: translateY(-5px);
+    }
+    
+    .review-header {
+      display: flex;
+      justify-content: space-between;
+      margin-bottom: 1rem;
+    }
+    
+    .review-author {
+      font-weight: bold;
+    }
+    
+    .review-rating {
+      color: #f1c40f;
+    }
+    
+    .review-form {
+      margin-top: 2rem;
+    }
+    
+    .review-form input,
+    .review-form textarea,
+    .review-form select {
+      width: 100%;
+      padding: 0.8rem;
+      margin-bottom: 1rem;
+      border: 1px solid #ddd;
+      border-radius: var(--radius);
+      font-size: 1rem;
+    }
+    
+    .review-form textarea {
+      height: 100px;
+      resize: vertical;
+    }
+    
+    /* Footer */
+    .footer {
+      background: var(--primary);
+      color: white;
+      text-align: center;
+      padding: 2rem;
+      margin-top: 3rem;
+    }
+    
+    /* Animations */
+    @keyframes pulse {
+      0% { transform: scale(1); }
+      50% { transform: scale(1.05); }
+      100% { transform: scale(1); }
+    }
+    
+    .pulse {
+      animation: pulse 2s infinite;
+    }
+    
+    /* Responsive */
+    @media (max-width: 768px) {
+      .photo-grid,
+      .features-activities-card,
+      .equipment-grid,
+      .membership-grid {
+        grid-template-columns: 1fr;
+      }
+      
+      .nav-links {
+        display: none;
+      }
+    }
+  </style>
+</head>
+
+<body>
+  <!-- Header/Navbar -->
+  <header class="header">
+    <div class="logo">FIT-verse</div>
+    <ul class="nav-links">
+      <li><a href="/">Home</a></li>
+      <li><a href="#">About</a></li>
+      <li><a href="#">Services</a></li>
+      <li><a href="#">Contact</a></li>
+      <li><a href="#">Profile</a></li>
+      <li><a href="#" onclick="logout()">Logout</a></li>
+    </ul>
+  </header>
+
+  <div class="container">
+    <!-- Gym Hero Section -->
+<section class="gym-hero animate__animated animate__fadeIn">
+  <img src="" alt="Gym Interior" id="gymHeroImage">
+  <div class="hero-content">
+    <h1 id="gymName">Loading gym...</h1> <!-- Changed from hardcoded value -->
+    <div class="rating" id="gymRating">
+      <!-- Stars will be inserted here by JavaScript -->
+    </div>
+  </div>
+</section>
+
+    <!-- Gym Photos -->
+    <section class="section animate__animated animate__fadeInUp">
+      <h2 class="section-title"><i class="fas fa-camera"></i> Gym Photos</h2>
+      <div class="photo-grid">
+        <div class="photo-item">
+          <img src="https://images.unsplash.com/photo-1538805060514-97d9cc17730c?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=687&q=80" alt="Gym Area">
+        </div>
+        <div class="photo-item">
+          <img src="https://images.unsplash.com/photo-1571019613454-1cb2f99b2d8b?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1170&q=80" alt="Cardio Area">
+        </div>
+        <div class="photo-item">
+          <img src="https://images.unsplash.com/photo-1581009146145-b5ef050c2e1e?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1170&q=80" alt="Weight Area">
+        </div>
+        <div class="photo-item">
+          <img src="https://images.unsplash.com/photo-1545205597-3d9d02c29597?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1170&q=80" alt="Yoga Area">
+        </div>
+      </div>
+    </section>
+
+    <!-- Location Map -->
+    <section class="section animate__animated animate__fadeInUp">
+      <h2 class="section-title"><i class="fas fa-map-marker-alt"></i> Location</h2>
+      <div id="map"></div>
+      <p style="margin-top: 1rem;"><i class="fas fa-clock"></i> <strong>Opening Hours:</strong> 6:00 AM - 11:00 PM (Mon-Sun)</p>
+      <p><i class="fas fa-phone"></i> <strong>Contact:</strong> +91 9876543210</p>
+    </section>
+
+     <!-- Features & Activities -->
+     <section class="section animate__animated animate__fadeInUp">
+      <h2 class="section-title"><i class="fas fa-dumbbell"></i> Features & Activities</h2>
+      <div id="gymDetailsContainer" class="features-activities-container">
+        <!-- This content will be dynamically replaced by JavaScript -->
+        <div class="default-content">
+          <div class="features-section">
+            <h3><i class="fas fa-check-circle"></i> Features</h3>
+            <div class="features-grid">
+              <!-- Default features will show if JavaScript fails -->
+              <div class="feature-item">
+                <i class="fas fa-heartbeat"></i>
+                <span>Cardio Equipment</span>
+              </div>
+              <div class="feature-item">
+                <i class="fas fa-dumbbell"></i>
+                <span>Strength Training</span>
+              </div>
+            </div>
+          </div>
+          <div class="activities-section">
+            <h3><i class="fas fa-running"></i> Activities</h3>
+            <div class="activities-grid">
+              <!-- Default activities will show if JavaScript fails -->
+              <div class="activity-item">
+                <i class="fas fa-fire"></i>
+                <span>HIIT Classes</span>
+              </div>
+              <div class="activity-item">
+                <i class="fas fa-spa"></i>
+                <span>Yoga Classes</span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Equipment -->
+    <section class="section animate__animated animate__fadeInUp">
+      <h2 class="section-title"><i class="fas fa-cogs"></i> Equipment Details</h2>
+      <div class="equipment-grid">
+        <div class="equipment-card">
+          <img src="https://www.fitnessdepot.ca/assets/Image/UploadedImages/ProductImages/1000/PR4000-10-10.jpg" alt="Power Rack">
+          <h3>Power Racks</h3>
+          <p>10 premium power racks with Olympic bars</p>
+        </div>
+        <div class="equipment-card">
+          <img src="https://www.fitnessdepot.ca/assets/Image/UploadedImages/ProductImages/1000/UB-LAT-PULLDOWN.jpg" alt="Cable Machine">
+          <h3>Cable Machines</h3>
+          <p>15 multi-functional cable stations</p>
+        </div>
+        <div class="equipment-card">
+          <img src="https://www.fitnessdepot.ca/assets/Image/UploadedImages/ProductImages/1000/UB-ADJUSTABLE-BENCH.jpg" alt="Adjustable Bench">
+          <h3>Adjustable Benches</h3>
+          <p>20 premium adjustable benches</p>
+        </div>
+        <div class="equipment-card">
+          <img src="https://www.fitnessdepot.ca/assets/Image/UploadedImages/ProductImages/1000/UB-DUMBBELLS.jpg" alt="Dumbbells">
+          <h3>Dumbbells</h3>
+          <p>5-100 lbs in 5 lb increments</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- Membership Plans -->
+    <section class="section animate__animated animate__fadeInUp">
+      <h2 class="section-title"><i class="fas fa-tag"></i> Membership Plans</h2>
+      <div class="membership-grid">
+        <div class="plan-card">
+          <h3 class="plan-name">Basic</h3>
+          <div class="plan-price">₹2,000<span>/mo</span></div>
+          <ul class="plan-features">
+            <li><i class="fas fa-check"></i> Gym Access</li>
+            <li><i class="fas fa-check"></i> Locker Usage</li>
+            <li><i class="fas fa-times"></i> Group Classes</li>
+            <li><i class="fas fa-times"></i> Personal Trainer</li>
+          </ul>
+          <button class="btn">Choose Plan</button>
+        </div>
+        <div class="plan-card popular">
+          <h3 class="plan-name">Premium</h3>
+          <div class="plan-price">₹3,500<span>/mo</span></div>
+          <ul class="plan-features">
+            <li><i class="fas fa-check"></i> Gym Access</li>
+            <li><i class="fas fa-check"></i> All Group Classes</li>
+            <li><i class="fas fa-check"></i> Locker + Towel Service</li>
+            <li><i class="fas fa-times"></i> Personal Trainer</li>
+          </ul>
+          <button class="btn pulse">Choose Plan</button>
+        </div>
+        <div class="plan-card">
+          <h3 class="plan-name">Elite</h3>
+          <div class="plan-price">₹5,000<span>/mo</span></div>
+          <ul class="plan-features">
+            <li><i class="fas fa-check"></i> 24/7 Gym Access</li>
+            <li><i class="fas fa-check"></i> Unlimited Classes</li>
+            <li><i class="fas fa-check"></i> 4 Personal Training Sessions</li>
+            <li><i class="fas fa-check"></i> Nutritional Guidance</li>
+          </ul>
+          <button class="btn">Choose Plan</button>
+        </div>
+      </div>
+    </section>
+
+    <!-- Trial Booking Form -->
+    <div class="trial-booking-container">
+      <h2>Book Your Trial Session</h2>
+      <form id="trial-booking-form">
+          <div class="form-group">
+              <input type="text" id="name" name="name" required placeholder=" ">
+              <label for="name">Your Name</label>
+          </div>
+          <div class="form-group">
+              <input type="email" id="email" name="email" required placeholder=" ">
+              <label for="email">Your Email</label>
+          </div>
+          <div class="form-group">
+              <input type="date" id="trial-date" name="trialDate" required placeholder=" ">
+              <label for="trial-date">Preferred Trial Date</label>
+          </div>
+          <div class="form-group">
+              <textarea id="message" name="message" placeholder=" "></textarea>
+              <label for="message">Additional Message</label>
+          </div>
+          <button type="submit" class="btn-submit">Submit Booking Request</button>
+      </form>
+  </div>
+
+
+    <!-- Reviews -->
+    <section class="section animate__animated animate__fadeInUp">
+      <h2 class="section-title"><i class="fas fa-star"></i> Reviews & Ratings</h2>
+      <div class="reviews">
+        <div class="review-card">
+          <div class="review-header">
+            <span class="review-author">Rahul Sharma</span>
+            <span class="review-rating">
+              <i class="fas fa-star"></i>
+              <i class="fas fa-star"></i>
+              <i class="fas fa-star"></i>
+              <i class="fas fa-star"></i>
+              <i class="fas fa-star"></i>
+            </span>
+          </div>
+          <p class="review-text">Best gym in Delhi! The equipment is top-notch and the trainers are very knowledgeable. I've seen amazing results in just 3 months.</p>
+          <small class="review-date">Posted on 15 March 2025</small>
+        </div>
+        <div class="review-card">
+          <div class="review-header">
+            <span class="review-author">Priya Patel</span>
+            <span class="review-rating">
+              <i class="fas fa-star"></i>
+              <i class="fas fa-star"></i>
+              <i class="fas fa-star"></i>
+              <i class="fas fa-star"></i>
+              <i class="fas fa-star-half-alt"></i>
+            </span>
+          </div>
+          <p class="review-text">Love the variety of classes offered. The Zumba sessions are my favorite! The facility is always clean and well-maintained.</p>
+          <small class="review-date">Posted on 5 April 2025</small>
+        </div>
+      </div>
+
+      <form id="reviewForm" class="review-form">
+        <h3>Write a Review</h3>
+        <input type="text" id="reviewerName" placeholder="Your name" required>
+        <textarea id="reviewText" placeholder="Your review" required></textarea>
+        <select id="reviewRating" required>
+          <option value="">Select Rating</option>
+          <option value="5">⭐ ⭐ ⭐ ⭐ ⭐</option>
+          <option value="4">⭐ ⭐ ⭐ ⭐</option>
+          <option value="3">⭐ ⭐ ⭐</option>
+          <option value="2">⭐ ⭐</option>
+          <option value="1">⭐</option>
+        </select>
+        <button type="submit" class="btn">Submit Review</button>
+      </form>
+    </section>
+  </div>
+
+  <!-- Footer -->
+  <footer class="footer">
+    <div class="container">
+      <p>© 2025 FIT-verse. All rights reserved.</p>
+      <div class="social-links">
+        <a href="#"><i class="fab fa-facebook"></i></a>
+        <a href="#"><i class="fab fa-instagram"></i></a>
+        <a href="#"><i class="fab fa-twitter"></i></a>
+        <a href="#"><i class="fab fa-youtube"></i></a>
+      </div>
+    </div>
+  </footer>
+
+ 
+</body>
+</html>

@@ -1,0 +1,1213 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Contact Us | FIT-verse</title>
+    <style>
+        :root {
+            --primary-color: #2a9d8f;
+            --secondary-color: #264653;
+            --accent-color: #e9c46a;
+            --dark-color: #2b2d42;
+            --light-color: #f8f9fa;
+            --danger-color: #e76f51;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+
+        body {
+            background-color: var(--light-color);
+            color: var(--dark-color);
+            line-height: 1.6;
+        }
+
+        header {
+    background: linear-gradient(135deg, var(--secondary-color), var(--primary-color));
+    color: white;
+    padding: 1rem 0;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+    position: fixed;
+    width: 100%;
+    top: 0;
+    z-index: 1000;
+}
+
+        .container {
+            width: 90%;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        .navbar {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 20px;
+}
+
+.logo {
+    font-size: 1.8rem;
+    font-weight: 700;
+    color: white;
+    text-decoration: none;
+}
+
+.logo span {
+    color: var(--accent-color);
+}
+.nav-links {
+    display: flex;
+    list-style: none;
+}
+
+.nav-links li {
+    margin-left: 2rem;
+    position: relative;
+}
+
+.nav-links a {
+    color: white;
+    text-decoration: none;
+    font-weight: 500;
+    transition: all 0.3s ease;
+    padding: 0.5rem 0;
+    position: relative;
+}
+
+.nav-links a.active, .nav-links a:hover {
+    color: var(--accent-color);
+}
+
+.nav-links a::after {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 0;
+    height: 2px;
+    background-color: var(--accent-color);
+    transition: width 0.3s ease;
+}
+
+.nav-links a.active::after, .nav-links a:hover::after {
+    width: 100%;
+}
+.user-icon {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    object-fit: cover;
+    border: 2px solid var(--secondary-color);
+  }
+  .dropdown.user-profile {
+    position: relative;
+  }
+  
+/* Existing navbar styles... */
+
+/* ====== Unified Dropdown System ====== */
+.dropdown {
+    position: relative;
+  }
+  
+  /* Main dropdown menu styles (for both Services and User Profile) */
+  .dropdown-menu {
+    position: absolute;
+    top: 100%;
+    background: white;
+    min-width: 200px;
+    border-radius: 5px;
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+    opacity: 0;
+    visibility: hidden;
+    transform: translateY(10px);
+    transition: all 0.3s ease;
+    z-index: 1000;
+    padding: 0;
+    margin: 0;
+    list-style: none;
+  }
+  
+  /* Services dropdown positions left */
+  .dropdown:not(.user-profile) .dropdown-menu {
+    left: 0;
+  }
+  
+  /* User profile dropdown positions right */
+  .user-profile .dropdown-menu {
+    right: 0;
+  }
+  
+  .dropdown:hover .dropdown-menu {
+    opacity: 1;
+    visibility: visible;
+    transform: translateY(0);
+  }
+  
+  /* Dropdown menu items */
+  .dropdown-menu li {
+    margin: 0;
+    padding: 0.7rem 1rem;
+    border-bottom: 1px solid #eee;
+    position: relative;
+  }
+  
+  .dropdown-menu li:last-child {
+    border-bottom: none;
+  }
+  
+  .dropdown-menu a {
+    color: var(--dark-color);
+    text-decoration: none;
+    display: block;
+  }
+  
+  .dropdown-menu a:hover {
+    color: var(--primary-color);
+  }
+  
+  /* ====== Settings Submenu ====== */
+  .settings-option {
+    position: relative;
+  }
+  
+  .settings-submenu {
+    position: absolute;
+    top: 0;
+    left: 100%;
+    background: white;
+    min-width: 180px;
+    border-radius: 0 5px 5px 5px;
+    box-shadow: 5px 5px 15px rgba(0, 0, 0, 0.1);
+    opacity: 0;
+    visibility: hidden;
+    transform: translateX(-10px);
+    transition: all 0.3s ease;
+    z-index: 1001;
+    padding: 0;
+    margin: 0;
+    list-style: none;
+  }
+  
+  .settings-option:hover .settings-submenu {
+    opacity: 1;
+    visibility: visible;
+    transform: translateX(0);
+  }
+  
+  /* Adjust submenu position for user profile dropdown */
+  .user-profile .settings-submenu {
+    left: auto;
+    right: 100%;
+    transform: translateX(10px);
+    border-radius: 5px 0 5px 5px;
+  }
+  
+  .user-profile .settings-option:hover .settings-submenu {
+    transform: translateX(0);
+  }
+  
+  /* ====== Mobile Toggle ====== */
+  .menu-toggle {
+    display: none;
+    font-size: 1.5rem;
+    cursor: pointer;
+  }
+
+
+        .hero {
+            background: url('https://images.unsplash.com/photo-1571019613454-1cb2f99b2d8b?ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=80') no-repeat center center/cover;
+            height: 300px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            position: relative;
+            color: white;
+        }
+
+        .hero::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.6);
+        }
+
+        .hero-content {
+            position: relative;
+            z-index: 1;
+        }
+
+        .hero h1 {
+            font-size: 3rem;
+            margin-bottom: 1rem;
+        }
+
+        .contact-section {
+            padding: 4rem 0;
+        }
+
+        .section-title {
+            text-align: center;
+            margin-bottom: 3rem;
+            color: var(--secondary-color);
+        }
+
+        .section-title h2 {
+            font-size: 2.5rem;
+            margin-bottom: 1rem;
+        }
+
+        .section-title p {
+            font-size: 1.1rem;
+            color: #666;
+            max-width: 700px;
+            margin: 0 auto;
+        }
+
+        .contact-container {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+        }
+
+        .contact-info {
+            background: white;
+            padding: 2rem;
+            border-radius: 8px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+            transition: transform 0.3s ease;
+        }
+
+        .contact-info:hover {
+            transform: translateY(-10px);
+        }
+
+        .contact-info h3 {
+            font-size: 1.5rem;
+            margin-bottom: 1.5rem;
+            color: var(--primary-color);
+        }
+
+        .info-item {
+            display: flex;
+            align-items: flex-start;
+            margin-bottom: 1.5rem;
+        }
+
+        .info-item i {
+            font-size: 1.2rem;
+            color: var(--primary-color);
+            margin-right: 1rem;
+            margin-top: 0.2rem;
+        }
+
+        .info-content h4 {
+            font-size: 1.1rem;
+            margin-bottom: 0.3rem;
+        }
+
+        .info-content p, .info-content a {
+            color: #666;
+            text-decoration: none;
+        }
+
+        .info-content a:hover {
+            color: var(--primary-color);
+        }
+
+        .contact-form {
+            background: white;
+            padding: 2rem;
+            border-radius: 8px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+        }
+
+        .contact-form h3 {
+            font-size: 1.5rem;
+            margin-bottom: 1.5rem;
+            color: var(--primary-color);
+        }
+
+        .form-group {
+            margin-bottom: 1.5rem;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 0.5rem;
+            font-weight: 500;
+        }
+
+        .form-control {
+            width: 100%;
+            padding: 0.8rem 1rem;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            font-size: 1rem;
+            transition: border 0.3s ease;
+        }
+
+        .form-control:focus {
+            outline: none;
+            border-color: var(--primary-color);
+        }
+
+        textarea.form-control {
+            min-height: 150px;
+            resize: vertical;
+        }
+
+        .btn {
+            display: inline-block;
+            background: var(--primary-color);
+            color: white;
+            padding: 0.8rem 2rem;
+            border: none;
+            border-radius: 4px;
+            font-size: 1rem;
+            font-weight: 500;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .btn:hover {
+            background: var(--secondary-color);
+            transform: translateY(-2px);
+        }
+
+        .gym-locations {
+            padding: 4rem 0;
+            background: #f1f1f1;
+        }
+
+        .location-cards {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+        }
+
+        .location-card {
+            background: white;
+            border-radius: 8px;
+            overflow: hidden;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+            transition: transform 0.3s ease;
+        }
+
+        .location-card:hover {
+            transform: translateY(-10px);
+        }
+
+        .location-img {
+            height: 200px;
+            overflow: hidden;
+        }
+
+        .location-img img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 0.5s ease;
+        }
+
+        .location-card:hover .location-img img {
+            transform: scale(1.1);
+        }
+
+        .location-info {
+            padding: 1.5rem;
+        }
+
+        .location-info h3 {
+            font-size: 1.3rem;
+            margin-bottom: 0.5rem;
+            color: var(--secondary-color);
+        }
+
+        .location-meta {
+            display: flex;
+            flex-wrap: wrap;
+            margin-bottom: 1rem;
+            font-size: 0.9rem;
+            color: #666;
+        }
+
+        .location-meta span {
+            margin-right: 1rem;
+            display: flex;
+            align-items: center;
+        }
+
+        .location-meta i {
+            margin-right: 0.3rem;
+            color: var(--primary-color);
+        }
+
+        .location-activities {
+            display: flex;
+            flex-wrap: wrap;
+            margin-bottom: 1rem;
+        }
+
+        .activity-tag {
+            background: var(--light-color);
+            color: var(--dark-color);
+            padding: 0.3rem 0.8rem;
+            border-radius: 20px;
+            font-size: 0.8rem;
+            margin-right: 0.5rem;
+            margin-bottom: 0.5rem;
+        }
+
+        .location-price {
+            font-weight: 700;
+            color: var(--primary-color);
+            margin-bottom: 1rem;
+        }
+
+        .location-link {
+            display: inline-block;
+            color: var(--primary-color);
+            font-weight: 500;
+            text-decoration: none;
+            transition: all 0.3s ease;
+        }
+
+        .location-link:hover {
+            color: var(--secondary-color);
+            text-decoration: underline;
+        }
+
+        .faq-section {
+            padding: 4rem 0;
+        }
+
+        .faq-container {
+            max-width: 800px;
+            margin: 0 auto;
+        }
+
+        .faq-item {
+            margin-bottom: 1rem;
+            border: 1px solid #ddd;
+            border-radius: 8px;
+            overflow: hidden;
+        }
+
+        .faq-question {
+            padding: 1.5rem;
+            background: white;
+            cursor: pointer;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            font-weight: 500;
+            transition: all 0.3s ease;
+        }
+
+        .faq-question:hover {
+            background: #f9f9f9;
+        }
+
+        .faq-question i {
+            transition: transform 0.3s ease;
+        }
+
+        .faq-answer {
+            padding: 0 1.5rem;
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.3s ease, padding 0.3s ease;
+            background: #f9f9f9;
+        }
+
+        .faq-item.active .faq-question {
+            background: var(--primary-color);
+            color: white;
+        }
+
+        .faq-item.active .faq-question i {
+            transform: rotate(180deg);
+        }
+
+        .faq-item.active .faq-answer {
+            padding: 1.5rem;
+            max-height: 500px;
+        }
+
+        footer {
+            background: var(--secondary-color);
+            color: white;
+            padding: 3rem 0 1rem;
+        }
+
+        .footer-container {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 2rem;
+            margin-bottom: 2rem;
+        }
+
+        .footer-col h3 {
+            font-size: 1.2rem;
+            margin-bottom: 1.5rem;
+            position: relative;
+            padding-bottom: 0.5rem;
+        }
+
+        .footer-col h3::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 50px;
+            height: 2px;
+            background: var(--accent-color);
+        }
+
+        .footer-col ul {
+            list-style: none;
+        }
+
+        .footer-col ul li {
+            margin-bottom: 0.8rem;
+        }
+
+        .footer-col ul li a {
+            color: #ddd;
+            text-decoration: none;
+            transition: all 0.3s ease;
+        }
+
+        .footer-col ul li a:hover {
+            color: var(--accent-color);
+            padding-left: 5px;
+        }
+
+        .social-links {
+            display: flex;
+            gap: 1rem;
+        }
+
+        .social-links a {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            width: 40px;
+            height: 40px;
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 50%;
+            color: white;
+            transition: all 0.3s ease;
+        }
+
+        .social-links a:hover {
+            background: var(--accent-color);
+            transform: translateY(-3px);
+        }
+
+        .footer-bottom {
+            text-align: center;
+            padding-top: 1.5rem;
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+            font-size: 0.9rem;
+            color: #aaa;
+        }
+
+        @media (max-width: 768px) {
+            .nav-links {
+                display: none;
+            }
+
+            .hero h1 {
+                font-size: 2rem;
+            }
+
+            .section-title h2 {
+                font-size: 2rem;
+            }
+        }
+
+        /* Animation classes */
+        .fade-in {
+            animation: fadeIn 1s ease-in;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+
+        .slide-up {
+            animation: slideUp 0.8s ease-out;
+        }
+
+        @keyframes slideUp {
+            from { 
+                opacity: 0;
+                transform: translateY(50px);
+            }
+            to { 
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        /* Map container */
+        .map-container {
+            height: 400px;
+            margin: 3rem 0;
+            border-radius: 8px;
+            overflow: hidden;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+        }
+
+        /* Custom checkbox for activities */
+        .activity-checkbox {
+            display: flex;
+            align-items: center;
+            margin-bottom: 1rem;
+            cursor: pointer;
+        }
+
+        .activity-checkbox input {
+            margin-right: 1rem;
+            width: 20px;
+            height: 20px;
+            cursor: pointer;
+        }
+
+        .activity-checkbox label {
+            cursor: pointer;
+        }
+
+        /* Success message */
+        .success-message {
+            display: none;
+            background: #d4edda;
+            color: #155724;
+            padding: 1rem;
+            border-radius: 4px;
+            margin-bottom: 1rem;
+            text-align: center;
+        }
+    </style>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+</head>
+<body>
+    <header>
+        <nav class="navbar">
+            <a href="index.html" class="logo">FIT<span>-verse</span></a>
+            <ul class="nav-links">
+                <li><a href="index.html" class="nav-item">Home</a></li>
+                <li><a href="#" class="nav-item">About</a></li>
+                <li class="dropdown">
+                    <a href="#" class="nav-item">Services</a>
+                    <ul class="dropdown-menu">
+                        <li><a href="personaltraining.html">Personal Training</a></li>
+                        <li><a href="membership-plans.html">Membership Plans</a></li>
+                        <li><a href="dietplans.html">Diet Plans</a></li>
+                    </ul>
+                </li>
+                <li><a href="contact.html" class="active">Contact</a></li>
+                 <!-- 👤 Shown only when user is logged in -->
+                 <li class="dropdown user-profile" id="user-profile-nav" style="display: none;">
+                    <a href="/frontend/public/userprofile.html" class="nav-item">
+                        <img id="profile-icon-img" src="/uploads/profile-pics/default.png" alt="User" class="user-icon" />
+                    </a>
+                    <ul class="dropdown-menu">
+                        <li><a href="edit-profile.html">Edit Profile</a></li>
+                        <li class="settings-option">
+                            <a href="#">Settings</a>
+                            <ul class="settings-submenu">
+                                <li><a href="#">Account Settings</a></li>
+                                <li><a href="#">Privacy</a></li>
+                                <li><a href="#">Notifications</a></li>
+                                <li><a href="#">Theme</a></li>
+                            </ul>
+                        </li>
+                        <li><a href="#" onclick="logout()">Logout</a></li>
+                    </ul>
+                </li>
+                
+                <!-- 🔐 Shown only when user is logged out -->
+                <li class="nav-item" id="login-signup-nav" style="display: none;">
+                    <a href="/frontend/public/login.html">Login / Signup</a>
+                </li>
+            </ul>
+            <div class="menu-toggle">&#9776;</div>
+                
+           
+        </nav>
+    </header>
+
+    <section class="hero">
+        <div class="hero-content">
+            <h1 class="fade-in">Get In Touch</h1>
+            <p class="slide-up">We're here to help you on your fitness journey</p>
+        </div>
+    </section>
+
+    <section class="contact-section">
+        <div class="container">
+            <div class="section-title slide-up">
+                <h2>Contact Us</h2>
+                <p>Have questions about our gyms, services, or membership options? Reach out to us and we'll get back to you as soon as possible.</p>
+            </div>
+
+            <div class="contact-container">
+                <div class="contact-info slide-up">
+                    <h3>Contact Information</h3>
+                    <div class="info-item">
+                        <i class="fas fa-map-marker-alt"></i>
+                        <div class="info-content">
+                            <h4>Address</h4>
+                            <p>123 Fitness Street, Health District, Faridabad, 120005</p>
+                        </div>
+                    </div>
+                    <div class="info-item">
+                        <i class="fas fa-phone-alt"></i>
+                        <div class="info-content">
+                            <h4>Phone</h4>
+                            <p><a href="tel:+911234567890">+91 12345 67890</a></p>
+                        </div>
+                    </div>
+                    <div class="info-item">
+                        <i class="fas fa-envelope"></i>
+                        <div class="info-content">
+                            <h4>Email</h4>
+                            <p><a href="mailto:info@fit-verse.com">info@fit-verse.com</a></p>
+                        </div>
+                    </div>
+                    <div class="info-item">
+                        <i class="fas fa-clock"></i>
+                        <div class="info-content">
+                            <h4>Working Hours</h4>
+                            <p>Monday - Friday: 6:00 AM - 10:00 PM<br>Saturday - Sunday: 7:00 AM - 9:00 PM</p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="contact-form slide-up">
+                    <h3>Send Us a Message</h3>
+                    <div class="success-message" id="successMessage">
+                        Thank you for your message! We'll get back to you soon.
+                    </div>
+                    <form id="contactForm">
+                        <div class="form-group">
+                            <label for="name">Your Name</label>
+                            <input type="text" id="name" class="form-control" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="email">Your Email</label>
+                            <input type="email" id="email" class="form-control" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="phone">Phone Number</label>
+                            <input type="tel" id="phone" class="form-control">
+                        </div>
+                        <div class="form-group">
+                            <label for="subject">Subject</label>
+                            <select id="subject" class="form-control" required>
+                                <option value="">Select a subject</option>
+                                <option value="membership">Membership Inquiry</option>
+                                <option value="feedback">Feedback/Suggestions</option>
+                                <option value="complaint">Complaint</option>
+                                <option value="partnership">Partnership Opportunity</option>
+                                <option value="other">Other</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label for="message">Your Message</label>
+                            <textarea id="message" class="form-control" required></textarea>
+                        </div>
+                        <div class="form-group">
+                            <label>Interested Activities (Optional)</label>
+                            <div class="activity-checkbox">
+                                <input type="checkbox" id="cardio" name="activities" value="cardio">
+                                <label for="cardio">Cardio</label>
+                            </div>
+                            <div class="activity-checkbox">
+                                <input type="checkbox" id="strength" name="activities" value="strength" checked>
+                                <label for="strength">Strength</label>
+                            </div>
+                            <div class="activity-checkbox">
+                                <input type="checkbox" id="zumba" name="activities" value="zumba">
+                                <label for="zumba">Zumba</label>
+                            </div>
+                            <div class="activity-checkbox">
+                                <input type="checkbox" id="yoga" name="activities" value="yoga">
+                                <label for="yoga">Yoga</label>
+                            </div>
+                        </div>
+                        <button type="submit" class="btn">Send Message</button>
+                    </form>
+                </div>
+            </div>
+
+            <div class="map-container slide-up">
+                <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3508.123456789012!2d77.319456!3d28.123456!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x0%3A0x0!2zMjjCsDA3JzI0LjQiTiA3N8KwMTknMTQuMSJF!5e0!3m2!1sen!2sin!4v1234567890123!5m2!1sen!2sin" width="100%" height="100%" style="border:0;" allowfullscreen="" loading="lazy"></iframe>
+            </div>
+        </div>
+    </section>
+
+    <section class="gym-locations">
+        <div class="container">
+            <div class="section-title slide-up">
+                <h2>Our Gym Locations</h2>
+                <p>Find the nearest FIT-verse gym to start your fitness journey today</p>
+            </div>
+
+            <div class="location-cards">
+                <div class="location-card slide-up">
+                    <div class="location-img">
+                        <img src="https://images.unsplash.com/photo-1571902943202-507ec2618e8f?ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=80" alt="Strength Fitness Gym">
+                    </div>
+                    <div class="location-info">
+                        <h3>Strength Fitness Gym</h3>
+                        <div class="location-meta">
+                            <span><i class="fas fa-map-marker-alt"></i> Faridabad</span>
+                            <span><i class="fas fa-location-arrow"></i> 0.44 km</span>
+                            <span><i class="fas fa-code"></i> 12005</span>
+                        </div>
+                        <div class="location-activities">
+                            <span class="activity-tag">Strength</span>
+                            <span class="activity-tag">Crossfit</span>
+                            <span class="activity-tag">Zumba</span>
+                        </div>
+                        <div class="location-price">₹2,099/month</div>
+                        <a href="#" class="location-link">View Full Profile <i class="fas fa-arrow-right"></i></a>
+                    </div>
+                </div>
+
+                <div class="location-card slide-up" style="animation-delay: 0.2s;">
+                    <div class="location-img">
+                        <img src="https://images.unsplash.com/photo-1534258936925-c58bed479fcb?ixlib=rb-1.2.1&auto=format&fit=crop&w=1351&q=80" alt="Cardio Plus Gym">
+                    </div>
+                    <div class="location-info">
+                        <h3>Cardio Plus Gym</h3>
+                        <div class="location-meta">
+                            <span><i class="fas fa-map-marker-alt"></i> Faridabad</span>
+                            <span><i class="fas fa-location-arrow"></i> 1.2 km</span>
+                            <span><i class="fas fa-code"></i> 12003</span>
+                        </div>
+                        <div class="location-activities">
+                            <span class="activity-tag">Cardio</span>
+                            <span class="activity-tag">Yoga</span>
+                            <span class="activity-tag">Pilates</span>
+                        </div>
+                        <div class="location-price">₹1,899/month</div>
+                        <a href="#" class="location-link">View Full Profile <i class="fas fa-arrow-right"></i></a>
+                    </div>
+                </div>
+
+                <div class="location-card slide-up" style="animation-delay: 0.4s;">
+                    <div class="location-img">
+                        <img src="https://images.unsplash.com/photo-1545205597-3d9d02c29597?ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=80" alt="Yoga Harmony Studio">
+                    </div>
+                    <div class="location-info">
+                        <h3>Yoga Harmony Studio</h3>
+                        <div class="location-meta">
+                            <span><i class="fas fa-map-marker-alt"></i> Faridabad</span>
+                            <span><i class="fas fa-location-arrow"></i> 2.1 km</span>
+                            <span><i class="fas fa-code"></i> 12009</span>
+                        </div>
+                        <div class="location-activities">
+                            <span class="activity-tag">Yoga</span>
+                            <span class="activity-tag">Meditation</span>
+                            <span class="activity-tag">Pranayama</span>
+                        </div>
+                        <div class="location-price">₹1,599/month</div>
+                        <a href="#" class="location-link">View Full Profile <i class="fas fa-arrow-right"></i></a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="faq-section">
+        <div class="container">
+            <div class="section-title slide-up">
+                <h2>Frequently Asked Questions</h2>
+                <p>Find answers to common questions about our gyms and services</p>
+            </div>
+
+            <div class="faq-container">
+                <div class="faq-item slide-up">
+                    <div class="faq-question">
+                        <span>What are your membership options?</span>
+                        <i class="fas fa-chevron-down"></i>
+                    </div>
+                    <div class="faq-answer">
+                        <p>We offer flexible membership options including monthly, quarterly, and annual plans. We also have special packages for students, seniors, and corporate clients. Visit our Services page or contact us for detailed pricing information.</p>
+                    </div>
+                </div>
+
+                <div class="faq-item slide-up" style="animation-delay: 0.1s;">
+                    <div class="faq-question">
+                        <span>Do you offer personal training services?</span>
+                        <i class="fas fa-chevron-down"></i>
+                    </div>
+                    <div class="faq-answer">
+                        <p>Yes, we have certified personal trainers available at all our locations. You can choose from one-on-one sessions or small group training. Our trainers will work with you to create a customized fitness plan based on your goals and fitness level.</p>
+                    </div>
+                </div>
+
+                <div class="faq-item slide-up" style="animation-delay: 0.2s;">
+                    <div class="faq-question">
+                        <span>What safety measures are in place?</span>
+                        <i class="fas fa-chevron-down"></i>
+                    </div>
+                    <div class="faq-answer">
+                        <p>Your safety is our priority. All our gyms follow strict hygiene protocols, including regular sanitization of equipment, social distancing measures, and mandatory temperature checks. Our staff is fully vaccinated and trained in COVID-19 safety procedures.</p>
+                    </div>
+                </div>
+
+                <div class="faq-item slide-up" style="animation-delay: 0.3s;">
+                    <div class="faq-question">
+                        <span>Can I freeze my membership?</span>
+                        <i class="fas fa-chevron-down"></i>
+                    </div>
+                    <div class="faq-answer">
+                        <p>Yes, we understand that circumstances change. You can freeze your membership for up to 3 months per year with proper documentation (medical certificate, travel proof, etc.). Please contact our support team to initiate a freeze.</p>
+                    </div>
+                </div>
+
+                <div class="faq-item slide-up" style="animation-delay: 0.4s;">
+                    <div class="faq-question">
+                        <span>Do you have women-only sections?</span>
+                        <i class="fas fa-chevron-down"></i>
+                    </div>
+                    <div class="faq-answer">
+                        <p>Most of our locations have dedicated women-only workout areas with separate changing rooms. Please check with your specific location for details about their women's section facilities.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <footer>
+        <div class="container">
+            <div class="footer-container">
+                <div class="footer-col">
+                    <h3>FIT-verse</h3>
+                    <p>Join the best gyms near you and achieve your fitness goals with our state-of-the-art facilities and expert trainers.</p>
+                    <div class="social-links">
+                        <a href="#"><i class="fab fa-facebook-f"></i></a>
+                        <a href="#"><i class="fab fa-twitter"></i></a>
+                        <a href="#"><i class="fab fa-instagram"></i></a>
+                        <a href="#"><i class="fab fa-linkedin-in"></i></a>
+                        <a href="#"><i class="fab fa-youtube"></i></a>
+                    </div>
+                </div>
+                <div class="footer-col">
+                    <h3>Quick Links</h3>
+                    <ul>
+                        <li><a href="index.html">Home</a></li>
+                        <li><a href="about.html">About Us</a></li>
+                        <li><a href="services.html">Services</a></li>
+                        <li><a href="contact.html">Contact</a></li>
+                        <li><a href="login.html">Login</a></li>
+                    </ul>
+                </div>
+                <div class="footer-col">
+                    <h3>Services</h3>
+                    <ul>
+                        <li><a href="#">Personal Training</a></li>
+                        <li><a href="#">Group Classes</a></li>
+                        <li><a href="#">Nutrition Plans</a></li>
+                        <li><a href="#">Corporate Wellness</a></li>
+                        <li><a href="#">Virtual Training</a></li>
+                    </ul>
+                </div>
+                <div class="footer-col">
+                    <h3>Contact Info</h3>
+                    <ul>
+                        <li><i class="fas fa-map-marker-alt"></i> 123 Fitness Street, Faridabad</li>
+                        <li><i class="fas fa-phone-alt"></i> +91 12345 67890</li>
+                        <li><i class="fas fa-envelope"></i> info@fit-verse.com</li>
+                        <li><i class="fas fa-clock"></i> Mon-Fri: 6AM-10PM</li>
+                    </ul>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; 2025 FIT-verse. All Rights Reserved. | <a href="#">Privacy Policy</a> | <a href="#">Terms of Service</a></p>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        // === NAVIGATION BAR: Toggle & Active Link Highlight ===
+document.addEventListener("DOMContentLoaded", function () {
+  const menuToggle = document.querySelector(".menu-toggle");
+  const navLinks = document.querySelector(".nav-links");
+  const links = document.querySelectorAll(".nav-link");
+  const currentPage = window.location.pathname.split("/").pop();
+
+  menuToggle.addEventListener("click", function () {
+    navLinks.style.display = navLinks.style.display === "flex" ? "none" : "flex";
+  });
+
+  links.forEach(link => {
+    if (link.getAttribute("href") === currentPage) {
+      link.classList.add("active");
+    }
+  });
+});
+
+        document.addEventListener('DOMContentLoaded', function() {
+            // FAQ functionality
+            const faqItems = document.querySelectorAll('.faq-item');
+            faqItems.forEach(item => {
+                const question = item.querySelector('.faq-question');
+                question.addEventListener('click', () => {
+                    item.classList.toggle('active');
+                    
+                    // Close other open items
+                    faqItems.forEach(otherItem => {
+                        if (otherItem !== item && otherItem.classList.contains('active')) {
+                            otherItem.classList.remove('active');
+                        }
+                    });
+                });
+            });
+
+            // Form submission
+            const contactForm = document.getElementById('contactForm');
+            const successMessage = document.getElementById('successMessage');
+            
+            contactForm.addEventListener('submit', function(e) {
+                e.preventDefault();
+                
+                // Simulate form submission
+                setTimeout(() => {
+                    contactForm.reset();
+                    successMessage.style.display = 'block';
+                    
+                    // Hide success message after 5 seconds
+                    setTimeout(() => {
+                        successMessage.style.display = 'none';
+                    }, 5000);
+                }, 1000);
+            });
+
+            // Animate elements when they come into view
+            const animateOnScroll = () => {
+                const elements = document.querySelectorAll('.slide-up');
+                
+                elements.forEach(element => {
+                    const elementPosition = element.getBoundingClientRect().top;
+                    const screenPosition = window.innerHeight / 1.2;
+                    
+                    if (elementPosition < screenPosition) {
+                        element.style.opacity = '1';
+                        element.style.transform = 'translateY(0)';
+                    }
+                });
+            };
+            
+            // Set initial state for animated elements
+            document.querySelectorAll('.slide-up').forEach(el => {
+                el.style.opacity = '0';
+                el.style.transform = 'translateY(50px)';
+                el.style.transition = 'opacity 0.8s ease, transform 0.8s ease';
+            });
+            
+            // Check on load and scroll
+            window.addEventListener('load', animateOnScroll);
+            window.addEventListener('scroll', animateOnScroll);
+
+            // Add delay to slide-up animations
+            document.querySelectorAll('.slide-up').forEach((el, index) => {
+                el.style.transitionDelay = `${index * 0.1}s`;
+            });
+        });
+        document.addEventListener("DOMContentLoaded", () => {
+  const token = localStorage.getItem("token");
+
+  const userNav = document.getElementById("user-profile-nav");
+  const loginNav = document.getElementById("login-signup-nav");
+
+  // Default states
+  if (userNav) userNav.style.display = "none";
+  if (loginNav) loginNav.style.display = "none";
+
+  if (!token) {
+    // 🔐 Not logged in: show login/signup
+    if (loginNav) loginNav.style.display = "block";
+    return;
+  }
+
+  // ✅ Try to fetch user profile if token exists
+  fetch('http://localhost:5000/api/users/profile', {
+    method: 'GET',
+    headers: {
+      'Content-Type': "application/json",
+      'Authorization': `Bearer ${token}`
+    }
+  })
+    .then(async (res) => {
+      if (!res.ok) {
+        const errText = await res.text();
+        throw new Error(`Server responded with ${res.status}: ${errText}`);
+      }
+      return res.json();
+    })
+    .then(user => {
+      const profilePicUrl = user.profileImage
+        ? `http://localhost:5000${user.profileImage}`
+        : `http://localhost:5000/uploads/profile-pics/default.png`;
+
+      const userIconImage = document.getElementById("profile-icon-img");
+      if (userIconImage) userIconImage.src = profilePicUrl;
+
+      // 👤 Show profile dropdown, hide login
+      if (userNav) userNav.style.display = "block";
+      if (loginNav) loginNav.style.display = "none";
+    })
+    .catch(error => {
+      console.error("Error fetching user:", error.message);
+      // 🔐 Failed to authenticate, show login
+      if (loginNav) loginNav.style.display = "block";
+    });
+});
+// Fallback for touch devices
+document.addEventListener('DOMContentLoaded', function() {
+  const settingsOptions = document.querySelectorAll('.settings-option');
+  
+  settingsOptions.forEach(option => {
+    // For mouse users
+    option.addEventListener('mouseenter', function() {
+      this.querySelector('.settings-submenu').style.display = 'block';
+    });
+    
+    option.addEventListener('mouseleave', function() {
+      this.querySelector('.settings-submenu').style.display = 'none';
+    });
+    
+    // For touch devices
+    option.addEventListener('click', function(e) {
+      if (window.innerWidth <= 768) { // Mobile devices
+        e.preventDefault();
+        const submenu = this.querySelector('.settings-submenu');
+        submenu.style.display = submenu.style.display === 'block' ? 'none' : 'block';
+      }
+    });
+  });
+});
+    </script>
+</body>
+</html>

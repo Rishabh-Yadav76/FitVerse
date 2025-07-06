@@ -1,0 +1,974 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>FitLife - Personal Training</title>
+    <script defer src="personaltraining.js"></script>
+    <style>
+        /* Consistent with your existing theme */
+        :root {
+            --primary-color: #2a9d8f;
+    --secondary-color: #264653;
+    --accent-color: #e9c46a;
+    --dark-color: #2b2d42;
+    --light-color: #f8f9fa;
+            --highlight-color: #3498db;
+        }
+        
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            margin: 0;
+            padding: 0;
+            color: var(--dark-color);
+            line-height: 1.6;
+        }
+        
+        /* Navbar - consistent with your existing theme */
+        header {
+    background: linear-gradient(135deg, var(--secondary-color), var(--primary-color));
+    color: white;
+    padding: 1rem 0;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+    position: fixed;
+    width: 100%;
+    top: 0;
+    z-index: 1000;
+}
+.navbar {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 20px;
+}
+
+.logo {
+    font-size: 1.8rem;
+    font-weight: 700;
+    color: white;
+    text-decoration: none;
+}
+
+.logo span {
+    color: var(--accent-color);
+}
+
+.nav-links {
+    display: flex;
+    list-style: none;
+}
+
+.nav-links li {
+    margin-left: 2rem;
+    position: relative;
+}
+
+.nav-links a {
+    color: white;
+    text-decoration: none;
+    font-weight: 500;
+    transition: all 0.3s ease;
+    padding: 0.5rem 0;
+    position: relative;
+}
+
+.nav-links a.active, .nav-links a:hover {
+    color: var(--accent-color);
+}
+
+.nav-links a::after {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 0;
+    height: 2px;
+    background-color: var(--accent-color);
+    transition: width 0.3s ease;
+}
+
+.nav-links a.active::after, .nav-links a:hover::after {
+    width: 100%;
+}
+.user-icon {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    object-fit: cover;
+    border: 2px solid var(--secondary-color);
+  }
+  .dropdown.user-profile {
+    position: relative;
+  }
+  .dropdown {
+    position: relative;
+  }
+  
+  /* Main dropdown menu styles (for both Services and User Profile) */
+  .dropdown-menu {
+    position: absolute;
+    top: 100%;
+    background: white;
+    min-width: 200px;
+    border-radius: 5px;
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+    opacity: 0;
+    visibility: hidden;
+    transform: translateY(10px);
+    transition: all 0.3s ease;
+    z-index: 1000;
+    padding: 0;
+    margin: 0;
+    list-style: none;
+  }
+  
+  /* Services dropdown positions left */
+  .dropdown:not(.user-profile) .dropdown-menu {
+    left: 0;
+  }
+  
+  /* User profile dropdown positions right */
+  .user-profile .dropdown-menu {
+    right: 0;
+  }
+  
+  .dropdown:hover .dropdown-menu {
+    opacity: 1;
+    visibility: visible;
+    transform: translateY(0);
+  }
+  
+  /* Dropdown menu items */
+  .dropdown-menu li {
+    margin: 0;
+    padding: 0.7rem 1rem;
+    border-bottom: 1px solid #eee;
+    position: relative;
+  }
+  
+  .dropdown-menu li:last-child {
+    border-bottom: none;
+  }
+  
+  .dropdown-menu a {
+    color: var(--dark-color);
+    text-decoration: none;
+    display: block;
+  }
+  
+  .dropdown-menu a:hover {
+    color: var(--primary-color);
+  }
+  
+  /* ====== Settings Submenu ====== */
+  .settings-option {
+    position: relative;
+  }
+  
+  .settings-submenu {
+    position: absolute;
+    top: 0;
+    left: 100%;
+    background: white;
+    min-width: 180px;
+    border-radius: 0 5px 5px 5px;
+    box-shadow: 5px 5px 15px rgba(0, 0, 0, 0.1);
+    opacity: 0;
+    visibility: hidden;
+    transform: translateX(-10px);
+    transition: all 0.3s ease;
+    z-index: 1001;
+    padding: 0;
+    margin: 0;
+    list-style: none;
+  }
+  
+  .settings-option:hover .settings-submenu {
+    opacity: 1;
+    visibility: visible;
+    transform: translateX(0);
+  }
+  
+  /* Adjust submenu position for user profile dropdown */
+  .user-profile .settings-submenu {
+    left: auto;
+    right: 100%;
+    transform: translateX(10px);
+    border-radius: 5px 0 5px 5px;
+  }
+  
+  .user-profile .settings-option:hover .settings-submenu {
+    transform: translateX(0);
+  }
+  
+  /* ====== Mobile Toggle ====== */
+  .menu-toggle {
+    display: none;
+    font-size: 1.5rem;
+    cursor: pointer;
+  }
+
+
+
+        
+        /* Main content */
+        .container {
+            max-width: 1200px;
+            margin: 2rem auto;
+            padding: 0 2rem;
+            margin-top: 80px;
+        }
+        
+        .page-header {
+            margin-top: 100px;
+            margin-left: 0;
+            text-align: center;
+            margin-bottom: 3rem;
+        }
+        
+        .page-header h1 {
+            font-size: 2.5rem;
+            color: var(--dark-color);
+            margin-bottom: 1rem;
+        }
+        
+        .page-header p {
+            font-size: 1.1rem;
+            color: #666;
+            max-width: 700px;
+            margin: 0 auto;
+        }
+        
+        /* Trainer Registration Section */
+        .registration-section {
+            background-color: var(--light-color);
+            padding: 2rem;
+            border-radius: 8px;
+            margin-bottom: 3rem;
+            text-align: center;
+        }
+        
+        .registration-section h2 {
+            color: var(--primary-color);
+            margin-bottom: 1.5rem;
+        }
+        
+        .btn {
+            display: inline-block;
+            background-color: var(--secondary-color);
+            color: white;
+            padding: 0.8rem 1.5rem;
+            border: none;
+            border-radius: 4px;
+            font-size: 1rem;
+            cursor: pointer;
+            transition: background-color 0.3s;
+            text-decoration: none;
+        }
+        
+        .btn:hover {
+            background-color: #c0392b;
+        }
+        
+        /* Filter Section */
+        .filter-section {
+            margin-bottom: 3rem;
+            padding: 1.5rem;
+            background-color: #f9f9f9;
+            border-radius: 8px;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.05);
+        }
+        
+        .filter-section h2 {
+            margin-top: 0;
+            color: var(--primary-color);
+        }
+        
+        .filter-form {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 1rem;
+            align-items: flex-end;
+        }
+        
+        .form-group {
+            flex: 1;
+            min-width: 200px;
+        }
+        
+        .form-group label {
+            display: block;
+            margin-bottom: 0.5rem;
+            font-weight: 500;
+        }
+        
+        .form-group select, 
+        .form-group input {
+            width: 100%;
+            padding: 0.8rem;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            font-size: 1rem;
+        }
+        
+        /* Trainers by Gym Section */
+        .gym-section {
+            margin-bottom: 3rem;
+        }
+        
+        .gym-section h2 {
+            color: var(--primary-color);
+            border-bottom: 2px solid var(--highlight-color);
+            padding-bottom: 0.5rem;
+            margin-bottom: 1.5rem;
+        }
+        
+        .trainers-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+            gap: 2rem;
+        }
+        
+        .trainer-card {
+            background-color: white;
+            border-radius: 8px;
+            overflow: hidden;
+            box-shadow: 0 3px 10px rgba(0,0,0,0.1);
+            transition: transform 0.3s, box-shadow 0.3s;
+        }
+        
+        .trainer-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+        }
+        
+        .trainer-image {
+            height: 200px;
+            overflow: hidden;
+        }
+        
+        .trainer-image img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 0.5s;
+        }
+        
+        .trainer-card:hover .trainer-image img {
+            transform: scale(1.05);
+        }
+        
+        .trainer-info {
+            padding: 1.5rem;
+        }
+        
+        .trainer-info h3 {
+            margin-top: 0;
+            color: var(--primary-color);
+        }
+        
+        .trainer-specialty {
+            color: var(--secondary-color);
+            font-weight: 500;
+            margin-bottom: 0.5rem;
+        }
+        
+        .trainer-bio {
+            color: #666;
+            margin-bottom: 1rem;
+            font-size: 0.9rem;
+        }
+        
+        .trainer-actions {
+            display: flex;
+            justify-content: space-between;
+        }
+        
+        .btn-outline {
+            background-color: transparent;
+            border: 1px solid var(--highlight-color);
+            color: var(--highlight-color);
+        }
+        
+        .btn-outline:hover {
+            background-color: var(--highlight-color);
+            color: white;
+        }
+        
+        /* Modal Styles */
+        .modal {
+            display: none;
+            position: fixed;
+            z-index: 100;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            overflow: auto;
+            background-color: rgba(0,0,0,0.5);
+        }
+        
+        .modal-content {
+            background-color: white;
+            margin: 5% auto;
+            padding: 2rem;
+            border-radius: 8px;
+            max-width: 800px;
+            width: 90%;
+            position: relative;
+            animation: modalopen 0.3s;
+        }
+        
+        @keyframes modalopen {
+            from {opacity: 0; transform: translateY(-50px);}
+            to {opacity: 1; transform: translateY(0);}
+        }
+        
+        .close-modal {
+            position: absolute;
+            top: 1rem;
+            right: 1rem;
+            font-size: 1.5rem;
+            cursor: pointer;
+            color: #666;
+        }
+        
+        /* Trainer Profile Modal */
+        .trainer-profile {
+            display: flex;
+            flex-direction: column;
+            gap: 2rem;
+        }
+        
+        @media (min-width: 768px) {
+            .trainer-profile {
+                flex-direction: row;
+            }
+        }
+        
+        .profile-main {
+            flex: 1;
+        }
+        
+        .profile-sidebar {
+            flex: 0 0 300px;
+        }
+        
+        .profile-header {
+            display: flex;
+            align-items: center;
+            margin-bottom: 1.5rem;
+        }
+        
+        .profile-image {
+            width: 100px;
+            height: 100px;
+            border-radius: 50%;
+            overflow: hidden;
+            margin-right: 1.5rem;
+            border: 3px solid var(--highlight-color);
+        }
+        
+        .profile-image img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+        
+        .profile-name h2 {
+            margin: 0;
+            color: var(--primary-color);
+        }
+        
+        .profile-name p {
+            margin: 0.3rem 0 0;
+            color: var(--secondary-color);
+            font-weight: 500;
+        }
+        
+        .profile-section {
+            margin-bottom: 1.5rem;
+        }
+        
+        .profile-section h3 {
+            color: var(--primary-color);
+            border-bottom: 1px solid #eee;
+            padding-bottom: 0.5rem;
+            margin-bottom: 1rem;
+        }
+        
+        .achievements-list {
+            list-style-type: none;
+            padding: 0;
+        }
+        
+        .achievements-list li {
+            margin-bottom: 0.8rem;
+            padding-left: 1.5rem;
+            position: relative;
+        }
+        
+        .achievements-list li:before {
+            content: "🏆";
+            position: absolute;
+            left: 0;
+        }
+        
+        .booking-form input,
+        .booking-form select,
+        .booking-form textarea {
+            width: 100%;
+            padding: 0.8rem;
+            margin-bottom: 1rem;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            font-size: 1rem;
+        }
+        
+        .booking-form button {
+            width: 100%;
+        }
+        
+        .contact-info p {
+            margin: 0.5rem 0;
+        }
+        
+        .contact-info i {
+            color: var(--highlight-color);
+            margin-right: 0.5rem;
+            width: 1.2rem;
+            text-align: center;
+        }
+        
+        /* Registration Form Styles */
+        .registration-form {
+            max-width: 600px;
+            margin: 0 auto;
+        }
+        
+        .form-row {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 1rem;
+            margin-bottom: 1rem;
+        }
+        
+        .form-col {
+            flex: 1;
+            min-width: 250px;
+        }
+        
+        .form-col label {
+            display: block;
+            margin-bottom: 0.5rem;
+            font-weight: 500;
+        }
+        
+        .form-col input,
+        .form-col select,
+        .form-col textarea {
+            width: 100%;
+            padding: 0.8rem;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            font-size: 1rem;
+        }
+        
+        .form-col textarea {
+            min-height: 100px;
+        }
+        
+        .certification-upload {
+            border: 2px dashed #ddd;
+            padding: 1.5rem;
+            text-align: center;
+            margin-bottom: 1rem;
+            border-radius: 4px;
+        }
+        
+        /* Footer */
+        footer {
+            background-color: var(--primary-color);
+            color: white;
+            text-align: center;
+            padding: 2rem;
+            margin-top: 3rem;
+        }
+        
+        .footer-links {
+            display: flex;
+            justify-content: center;
+            list-style: none;
+            padding: 0;
+            margin: 1rem 0;
+        }
+        
+        .footer-links li {
+            margin: 0 1rem;
+        }
+        
+        .footer-links a {
+            color: white;
+            text-decoration: none;
+        }
+        
+        .footer-links a:hover {
+            text-decoration: underline;
+        }
+        .loading-indicator {
+    text-align: center;
+    padding: 2rem;
+}
+
+.spinner {
+    border: 4px solid rgba(0, 0, 0, 0.1);
+    border-radius: 50%;
+    border-top: 4px solid #3498db;
+    width: 40px;
+    height: 40px;
+    animation: spin 1s linear infinite;
+    margin: 0 auto 1rem;
+}
+
+@keyframes spin {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
+}
+
+.error-message {
+    text-align: center;
+    padding: 2rem;
+    color: #e74c3c;
+}
+
+.trainers-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+    gap: 1.5rem;
+    padding: 1rem 0;
+}
+    </style>
+</head>
+<body>
+    <!-- Navbar consistent with your existing theme -->
+    <header>
+        <nav class="navbar">
+            <a href="index.html" class="logo">FIT<span>-verse</span></a>
+            <ul class="nav-links">
+                <li><a href="index.html" class="nav-item">Home</a></li>
+                <li><a href="#" class="nav-item">About</a></li>
+                <li class="dropdown">
+                    <a href="#" class="active">Services</a>
+                    <ul class="dropdown-menu">
+                        <li><a href="personaltraining.html" class="active">Personal Training</a></li>
+                        <li><a href="membership-plans.html">Membership Plans</a></li>
+                        <li><a href="dietplans.html">Diet Plans</a></li>
+                    </ul>
+                </li>
+                <li><a href="contact.html" class="nav-item">Contact</a></li>
+                <!-- 👤 Shown only when user is logged in -->
+                <li class="dropdown user-profile" id="user-profile-nav" style="display: none;">
+                    <a href="/frontend/public/userprofile.html" class="nav-item">
+                        <img id="profile-icon-img" src="/uploads/profile-pics/default.png" alt="User" class="user-icon" />
+                    </a>
+                    <ul class="dropdown-menu">
+                        <li><a href="edit-profile.html">Edit Profile</a></li>
+                        <li class="settings-option">
+                            <a href="#">Settings</a>
+                            <ul class="settings-submenu">
+                                <li><a href="#">Account Settings</a></li>
+                                <li><a href="#">Privacy</a></li>
+                                <li><a href="#">Notifications</a></li>
+                                <li><a href="#">Theme</a></li>
+                            </ul>
+                        </li>
+                        <li><a href="#" onclick="logout()">Logout</a></li>
+                    </ul>
+                </li>
+                
+                <!-- 🔐 Shown only when user is logged out -->
+                <li class="nav-item" id="login-signup-nav" style="display: none;">
+                    <a href="/frontend/public/login.html">Login / Signup</a>
+                </li>
+            </ul>
+            <div class="menu-toggle">&#9776;</div>
+        </nav>
+    </header>
+
+    <!-- Main Content -->
+    <div class="container">
+        <section class="page-header">
+            <h1>Personal Training</h1>
+            <p>Get one-on-one guidance from our certified personal trainers to help you reach your fitness goals faster and more effectively.</p>
+        </section>
+
+        <!-- Trainer Registration Option -->
+        <section class="registration-section">
+            <h2>Are you a certified personal trainer?</h2>
+            <p>Join our network of fitness professionals and connect with clients looking for your expertise.</p>
+            <a href="#" class="btn" id="registerBtn">Register as a Trainer</a>
+        </section>
+
+        <!-- Filter for Finding Trainers -->
+        <section class="filter-section">
+            <h2>Find Your Perfect Trainer</h2>
+            <form class="filter-form">
+                <div class="form-group">
+                    <label for="location">Location</label>
+                    <select id="location">
+                        <option value="All Cities">All Cities</option>
+                        <option value="Faridabad">Faridabad</option>
+                        <option value="Delhi">Delhi</option>
+                        <option value="Gurugram">Gurugram</option>
+                        <option value="Noida">Noida</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label for="specialty">Specialty</label>
+                    <select id="specialty">
+                        <option value="">All Specialties</option>
+                        <option value="Weight Loss">Weight Loss</option>
+                        <option value="Bodybuilding">Bodybuilding</option>
+                        <option value="Functional Training">Functional Training</option>
+                        <option value="Sports Performance">Sports Performance</option>
+                        <option value="Rehabilitation">Rehabilitation</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label for="availability">Availability</label>
+                    <select id="availability">
+                        <option value="">Any Time</option>
+                        <option value="morning">Mornings</option>
+                        <option value="afternoon">Afternoons</option>
+                        <option value="evening">Evenings</option>
+                        <option value="weekends">Weekends</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <button type="submit" class="btn">Find Trainers</button>
+                </div>
+            </form>
+        </section>
+
+        <!-- Trainers by Gym Sections -->
+   <div class="trainers-container">
+    <section class="gym-section">
+        <h2>Beast Fitness Trainers</h2>
+        <div class="trainers-grid">
+            <!-- Trainer cards will be inserted here by JavaScript -->
+        </div>
+    </section>
+
+    <section class="gym-section">
+        <h2>Midtown Gym Trainers</h2>
+        <div class="trainers-grid">
+            <!-- Trainer cards will be inserted here by JavaScript -->
+        </div>
+    </section>
+</div>
+
+        
+    </div>
+
+    <!-- Trainer Profile Modal -->
+   <!-- Trainer Profile Modal -->
+<div class="modal" id="trainerModal">
+    <div class="modal-content">
+        <span class="close-modal">&times;</span>
+        <div class="trainer-profile">
+            <div class="profile-main">
+                <div class="profile-header">
+                    <div class="profile-image">
+                        <img src="" alt="">
+                    </div>
+                    <div class="profile-name">
+                        <h2></h2>
+                        <p></p>
+                    </div>
+                </div>
+
+                <div class="profile-section">
+                    <h3>About Me</h3>
+                    <p class="about-text"></p>
+                </div>
+
+                <div class="profile-section">
+                    <h3>Specialties</h3>
+                    <ul class="specialties-list"></ul>
+                </div>
+
+                <div class="profile-section">
+                    <h3>Availability</h3>
+                    <ul class="availability-list"></ul>
+                </div>
+
+                <div class="profile-section">
+                    <h3>Client Success Stories</h3>
+                    <div class="testimonials-container"></div>
+                </div>
+            </div>
+
+            <div class="profile-sidebar">
+                <div class="profile-section">
+                    <h3>Contact Information</h3>
+                    <div class="contact-info"></div>
+                </div>
+
+                <div class="profile-section">
+                    <h3>Certifications</h3>
+                    <ul class="certifications-list"></ul>
+                </div>
+
+                <div class="profile-section">
+                    <h3>Book a Session</h3>
+                    <form class="booking-form">
+                        <!-- Form fields will be populated by JS if needed -->
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<!--loading -->
+<div class="loading-indicator" style="display: none;">
+    <div class="spinner"></div>
+    <p>Loading trainers...</p>
+</div>
+<!--Error msg-->
+<div class="error-message" style="display: none;">
+    <p>⚠️ Failed to load trainer data. Please try again later.</p>
+    <button class="btn retry-loading">Retry</button>
+</div>
+
+    <!-- Registration Form Modal -->
+    <div class="modal" id="registrationModal">
+        <div class="modal-content">
+            <span class="close-modal">&times;</span>
+            <h2>Trainer Registration</h2>
+            <p>Please fill out the form below to join our network of certified personal trainers.</p>
+            
+            <form class="registration-form" id="registrationForm" enctype="multipart/form-data">
+
+                <div class="form-row">
+                    <div class="form-col">
+                        <label for="firstName">First Name</label>
+                        <input type="text" id="firstName"  name="firstName"  required>
+                    </div>
+                    <div class="form-col">
+                        <label for="lastName">Last Name</label>
+                        <input type="text" id="lastName" name="lastName" required>
+                    </div>
+                </div>
+                
+                <div class="form-row">
+                    <div class="form-col">
+                        <label for="email">Email Address</label>
+                        <input type="email" id="email" name="email" required>
+                    </div>
+                    <div class="form-col">
+                        <label for="phone">Phone Number</label>
+                        <input type="tel" id="phone" name="phone" required>
+                    </div>
+                </div>
+                
+                <div class="form-row">
+                    <div class="form-col">
+                        <label for="specialty">Primary Specialty</label>
+                        <select id="specialty" name="specialty" required>
+                            <option value="">Select your specialty</option>
+                            <option value="weight-loss">Weight Loss</option>
+                            <option value="strength">Strength Training</option>
+                            <option value="functional">Functional Training</option>
+                            <option value="sports">Sports Performance</option>
+                            <option value="rehab">Rehabilitation</option>
+                            <option value="yoga">Yoga/Pilates</option>
+                            <option value="senior">Senior Fitness</option>
+                            <option value="other">Other</option>
+                        </select>
+                    </div>
+                    <div class="form-col">
+                        <label for="experience">Years of Experience</label>
+                        <input type="number" id="experience" min="0" name="experience" required>
+                    </div>
+                </div>
+                
+                <div class="form-row">
+                    <div class="form-col">
+                        <label for="locations">Preferred Gym Locations</label>
+                        <select id="city" name="city" multiple required>
+                            <option value="Faridabad">Faridabad</option>
+                            <option value="Delhi">Delhi</option>
+                            <option value="Gurugram">Gurugram</option>
+                            <option value="Noida">Noida</option>
+                          </select>
+                        <small>Hold Ctrl/Cmd to select multiple locations</small>
+                    </div>
+                </div>
+                <!-- Gym Dropdown -->
+<div class="form-group">
+    <label for="gym">Select Gym</label>
+    <select id="gym" name="gym" required>
+      <option value="">-- Select Gym --</option>
+      <!-- gyms will be added here dynamically -->
+    </select>
+  </div>
+                
+                <div class="form-row">
+                    <div class="form-col">
+                        <label for="availability">Availability</label>
+                        <textarea id="availability" placeholder="Please describe your typical availability (days/times)" name="availability"></textarea>
+                    </div>
+                </div>
+                
+                <div class="form-row">
+                    <div class="form-col">
+                        <label>Certifications</label>
+                        <div class="certification-upload">
+                            <p>Upload copies of your certifications (PDF, JPG, or PNG)</p>
+                            <input type="file" id="certifications" multiple accept=".pdf,.jpg,.jpeg,.png" name="certifications" multiple/>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="form-row">
+                    <div class="form-col">
+                        <label for="bio">Professional Bio</label>
+                        <textarea id="bio" placeholder="Tell us about your training philosophy and approach" name="bio"></textarea>
+                    </div>
+                </div>
+                
+                <div class="form-row">
+                    <div class="form-col">
+                        <label for="rate">Hourly Rate (₹)</label>
+                        <input type="number" id="rate" min="0" step="5" name="rate" required>
+                    </div>
+                    <div class="form-col">
+                        <label for="photo">Profile Photo</label>
+                        <input type="file" id="photo" accept=".jpg,.jpeg,.png" name="photo"/>
+                    </div>
+                </div>
+                
+                <div class="form-row">
+                    <div class="form-col">
+                        <button type="submit" class="btn">Submit Application</button>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <footer>
+        <p>&copy; 2025 Fit-verse. All rights reserved.</p>
+        <ul class="footer-links">
+            <li><a href="privacy.html">Privacy Policy</a></li>
+            <li><a href="terms.html">Terms of Service</a></li>
+            <li><a href="contact.html">Contact Us</a></li>
+            <li><a href="index.html">Home</a></li>
+        </ul>
+    </footer>
+
+</body>
+</html>
